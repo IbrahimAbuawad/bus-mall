@@ -66,24 +66,24 @@ for (let i = 0; i < names.length; i++) {
 // console.table(Picture.all);
 
 function render() {
-  
-  
+
+
   while(index1 === holdIndex1 || index1 === holdIndex2 || index1 === holdIndex3){
     index1 = randomNumber(0, Picture.all.length - 1);
   }
 
-  holdIndex1 = index1;
+  console.log(holdIndex1);
   image1.src = Picture.all[index1].path;
   image1.title = Picture.all[index1].name;
   Picture.all[index1].times++;
 
 
- 
-  
+
+
   while(index2 === holdIndex1 || index2 === holdIndex2 || index2 === holdIndex3){
     index2 = randomNumber(0, Picture.all.length - 1);
   }
-  holdIndex2 = index2;
+  console.log(holdIndex2);
   if (index2 !== index1) {
     image2.src = Picture.all[index2].path;
     image2.title = Picture.all[index2].name;
@@ -106,11 +106,11 @@ function render() {
   }
 
 
-  
+
   while(index3 === holdIndex1 || index3 === holdIndex2 || index3 === holdIndex3){
     index3 = randomNumber(0, Picture.all.length - 1);
   }
-  holdIndex3 = index3;
+  console.log(holdIndex3);
 
   if (index3 !== index1 && index3 !== index2) {
     image3.src = Picture.all[index3].path;
@@ -138,6 +138,11 @@ function render() {
     Picture.all[index3].times++;
 
   }
+  holdIndex1 = index1;
+  holdIndex2 = index2;
+  holdIndex3 = index3;
+
+
 
 }
 
@@ -167,7 +172,7 @@ function handelClick(event) {
     count = count + 1;
     if (count < 25) {
       result.style.visibility = 'hidden';
-      console.log(count);
+      // console.log(count);
     }
     else {
       result.style.visibility = 'visible';
