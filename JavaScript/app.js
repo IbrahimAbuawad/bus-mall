@@ -11,6 +11,9 @@ let index1;
 let index2;
 let index3;
 
+let viewsArray = [];
+let votesArray = [];
+
 let count = 1;
 
 result.style.visibility = 'hidden';
@@ -168,13 +171,41 @@ result.addEventListener('click', resultFunc);
 function resultFunc() {
   ulElement.textContent = '';
   for (let i = 0; i < Picture.all.length; i++) {
-    let liElement = document.createElement('li');
-    liElement.textContent = `${Picture.all[i].name} had ${Picture.all[i].votes} votes, and was seen ${Picture.all[i].times} times`;
-    ulElement.appendChild(liElement);
+    // let liElement = document.createElement('li');
+    // liElement.textContent = `${Picture.all[i].name} had ${Picture.all[i].votes} votes, and was seen ${Picture.all[i].times} times`;
+    // ulElement.appendChild(liElement);
+    viewsArray.push(Picture.all[i].times);
+    votesArray.push(Picture.all[i].votes);
 
   }
-  //   console.log(Picture.all);
+  let ctx = document.getElementById('myChart').getContext('2d');
+  let chart = new Chart(ctx, {
+    // The type of chart we want to create
+    type: 'bar',
+
+    // The data for our dataset
+    data: {
+      labels: names,
+      datasets: [{
+        label: 'Photo\'s Votes',
+        backgroundColor: 'rgb(255, 230, 1)',
+        borderColor: 'rgb(255, 99, 132)',
+        data: votesArray
+      },
+      {
+        label: 'Photo\'s Views',
+        backgroundColor: 'tomato',
+        borderColor: 'rgb(253, 46, 46)',
+        data: viewsArray
+      }]
+    },
+
+    // Configuration options go here
+    options: {}
+  });
 }
+
+
 
 
 
