@@ -4,11 +4,12 @@ body{
 *{
     transition: all 0.2s;
 }
+
 img{
-    width:300px;
+    width:30%;
     height: 500px;
     margin:10px 6px;
-    box-shadow: 5px 5px black;
+    box-shadow: 5px 5px rgba(153, 15, 15, 0.808);
 }
 
 li{
@@ -22,10 +23,18 @@ button{
     padding: 10px 20px;
     background-color: tomato;
     color: white;
+    margin: 10px auto;
+    
 
 }
 
 button:hover{
     background-color: rgb(253, 116, 92);
     color: rgb(247, 243, 243);
+   
 }
+
+main{
+
+    text-align: center;
+    }

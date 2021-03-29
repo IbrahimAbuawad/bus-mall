@@ -11,6 +11,13 @@ let index1;
 let index2;
 let index3;
 
+let holdIndex1;
+let holdIndex2;
+let holdIndex3;
+
+let viewsArray = [];
+let votesArray = [];
+
 let count = 1;
 
 result.style.visibility = 'hidden';
@@ -59,18 +66,24 @@ for (let i = 0; i < names.length; i++) {
 // console.table(Picture.all);
 
 function render() {
+  
+  
+  while(index1 === holdIndex1 || index1 === holdIndex2 || index1 === holdIndex3){
+    index1 = randomNumber(0, Picture.all.length - 1);
+  }
 
-  index1 = randomNumber(0, Picture.all.length - 1);
-
+  holdIndex1 = index1;
   image1.src = Picture.all[index1].path;
   image1.title = Picture.all[index1].name;
   Picture.all[index1].times++;
 
 
-
-  index2 = randomNumber(0, Picture.all.length - 1);
-
-
+ 
+  
+  while(index2 === holdIndex1 || index2 === holdIndex2 || index2 === holdIndex3){
+    index2 = randomNumber(0, Picture.all.length - 1);
+  }
+  holdIndex2 = index2;
   if (index2 !== index1) {
     image2.src = Picture.all[index2].path;
     image2.title = Picture.all[index2].name;
@@ -93,7 +106,11 @@ function render() {
   }
 
 
-  index3 = randomNumber(0, Picture.all.length - 1);
+  
+  while(index3 === holdIndex1 || index3 === holdIndex2 || index3 === holdIndex3){
+    index3 = randomNumber(0, Picture.all.length - 1);
+  }
+  holdIndex3 = index3;
 
   if (index3 !== index1 && index3 !== index2) {
     image3.src = Picture.all[index3].path;
@@ -168,13 +185,41 @@ result.addEventListener('click', resultFunc);
 function resultFunc() {
   ulElement.textContent = '';
   for (let i = 0; i < Picture.all.length; i++) {
-    let liElement = document.createElement('li');
-    liElement.textContent = `${Picture.all[i].name} had ${Picture.all[i].votes} votes, and was seen ${Picture.all[i].times} times`;
-    ulElement.appendChild(liElement);
+    // let liElement = document.createElement('li');
+    // liElement.textContent = `${Picture.all[i].name} had ${Picture.all[i].votes} votes, and was seen ${Picture.all[i].times} times`;
+    // ulElement.appendChild(liElement);
+    viewsArray.push(Picture.all[i].times);
+    votesArray.push(Picture.all[i].votes);
 
   }
-  //   console.log(Picture.all);
+  let ctx = document.getElementById('myChart').getContext('2d');
+  let chart = new Chart(ctx, {
+    // The type of chart we want to create
+    type: 'bar',
+
+    // The data for our dataset
+    data: {
+      labels: names,
+      datasets: [{
+        label: 'Photo\'s Votes',
+        backgroundColor: 'rgb(255, 230, 1)',
+        borderColor: 'rgb(255, 99, 132)',
+        data: votesArray
+      },
+      {
+        label: 'Photo\'s Views',
+        backgroundColor: 'tomato',
+        borderColor: 'rgb(253, 46, 46)',
+        data: viewsArray
+      }]
+    },
+
+    // Configuration options go here
+    options: {}
+  });
 }
+
+
 
 
 
