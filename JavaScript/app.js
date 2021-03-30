@@ -52,20 +52,33 @@ const names = [
 ];
 
 
+
 function Picture(name) {
   this.name = name;
   this.path = `./img/${this.name}.jpg`;
   this.times = 0;
   this.votes = 0;
   Picture.all.push(this);
+
+  // setItems();
 }
 
 Picture.all = [];
+
+getItems();
+
 
 for (let i = 0; i < names.length; i++) {
   new Picture(names[i]);
 }
 // console.table(Picture.all);
+
+
+function setItems(){
+  let picturesItems =JSON.stringify(Picture.all);
+  localStorage.setItem('Pictures',picturesItems);
+}
+
 
 function render() {
 
@@ -91,23 +104,6 @@ function render() {
   image2.title = Picture.all[index2].name;
   Picture.all[index2].times++;
 
-  // }
-  // else if (index2 === 0) {
-  //   index2++;
-  //   image2.src = Picture.all[index2].path;
-  //   image2.title = Picture.all[index2].name;
-  //   Picture.all[index2].times++;
-
-  // }
-  // else {
-  //   index2--;
-  //   image2.src = Picture.all[index2].path;
-  //   image2.title = Picture.all[index2].name;
-  //   Picture.all[index2].times++;
-
-  // }
-
-
 
   while (index3 === holdIndex1 || index3 === holdIndex2 || index3 === holdIndex3 || index3 === index1 || index3 === index2) {
     index3 = randomNumber(0, Picture.all.length - 1);
@@ -119,33 +115,12 @@ function render() {
   image3.title = Picture.all[index3].name;
   Picture.all[index3].times++;
 
-  // }
-  // else if (index3 === 0) {
-  //   while (index3 === index1 || index3 === index2) {
-  //     index3++;
-  //   }
 
-  //   image3.src = Picture.all[index3].path;
-  //   image3.title = Picture.all[index3].name;
-  //   Picture.all[index3].times++;
-
-  // }
-  // else {
-  //   while (index3 === index1 || index3 === index2) {
-  //     index3--;
-  //   }
-
-  //   image3.src = Picture.all[index3].path;
-  //   image3.title = Picture.all[index3].name;
-  //   Picture.all[index3].times++;
-
-  // }
   holdIndex1 = index1;
   holdIndex2 = index2;
   holdIndex3 = index3;
 
-
-
+  
 }
 
 render();
@@ -184,13 +159,32 @@ function handelClick(event) {
 
     }
   }
+  setItems();
+
 }
+
+
+function getItems(){
+
+  let product = localStorage.getItem('Pictures');
+  if(product) {
+    Picture.all = JSON.parse(product);
+    // console.log(Picture.all);
+
+
+  }
+
+}
+
+
+result.addEventListener('click', resultFunc);
+
 let ulElement = document.createElement('ul');
 ulDiv.appendChild(ulElement);
-result.addEventListener('click', resultFunc);
 
 function resultFunc() {
   ulElement.textContent = '';
+
   for (let i = 0; i < Picture.all.length; i++) {
     // let liElement = document.createElement('li');
     // liElement.textContent = `${Picture.all[i].name} had ${Picture.all[i].votes} votes, and was seen ${Picture.all[i].times} times`;
@@ -199,6 +193,8 @@ function resultFunc() {
     votesArray.push(Picture.all[i].votes);
 
   }
+
+
   let ctx = document.getElementById('myChart').getContext('2d');
 
   let chart = new Chart(ctx, {
@@ -226,6 +222,12 @@ function resultFunc() {
     options: {}
   });
 }
+
+
+
+
+
+
 
 
 
