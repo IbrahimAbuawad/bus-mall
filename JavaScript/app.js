@@ -15,6 +15,8 @@ let holdIndex1;
 let holdIndex2;
 let holdIndex3;
 
+let rounds = 25;
+
 let viewsArray = [];
 let votesArray = [];
 
@@ -68,7 +70,7 @@ for (let i = 0; i < names.length; i++) {
 function render() {
 
 
-  while(index1 === holdIndex1 || index1 === holdIndex2 || index1 === holdIndex3){
+  while (index1 === holdIndex1 || index1 === holdIndex2 || index1 === holdIndex3) {
     index1 = randomNumber(0, Picture.all.length - 1);
   }
 
@@ -80,64 +82,64 @@ function render() {
 
 
 
-  while(index2 === holdIndex1 || index2 === holdIndex2 || index2 === holdIndex3){
+  while (index2 === holdIndex1 || index2 === holdIndex2 || index2 === holdIndex3 || index2 === index1) {
     index2 = randomNumber(0, Picture.all.length - 1);
   }
   console.log(holdIndex2);
-  if (index2 !== index1) {
-    image2.src = Picture.all[index2].path;
-    image2.title = Picture.all[index2].name;
-    Picture.all[index2].times++;
+  // if (index2 !== index1) {
+  image2.src = Picture.all[index2].path;
+  image2.title = Picture.all[index2].name;
+  Picture.all[index2].times++;
 
-  }
-  else if (index2 === 0) {
-    index2++;
-    image2.src = Picture.all[index2].path;
-    image2.title = Picture.all[index2].name;
-    Picture.all[index2].times++;
+  // }
+  // else if (index2 === 0) {
+  //   index2++;
+  //   image2.src = Picture.all[index2].path;
+  //   image2.title = Picture.all[index2].name;
+  //   Picture.all[index2].times++;
 
-  }
-  else {
-    index2--;
-    image2.src = Picture.all[index2].path;
-    image2.title = Picture.all[index2].name;
-    Picture.all[index2].times++;
+  // }
+  // else {
+  //   index2--;
+  //   image2.src = Picture.all[index2].path;
+  //   image2.title = Picture.all[index2].name;
+  //   Picture.all[index2].times++;
 
-  }
+  // }
 
 
 
-  while(index3 === holdIndex1 || index3 === holdIndex2 || index3 === holdIndex3){
+  while (index3 === holdIndex1 || index3 === holdIndex2 || index3 === holdIndex3 || index3 === index1 || index3 === index2) {
     index3 = randomNumber(0, Picture.all.length - 1);
   }
   console.log(holdIndex3);
 
-  if (index3 !== index1 && index3 !== index2) {
-    image3.src = Picture.all[index3].path;
-    image3.title = Picture.all[index3].name;
-    Picture.all[index3].times++;
+  // if (index3 !== index1 && index3 !== index2) {
+  image3.src = Picture.all[index3].path;
+  image3.title = Picture.all[index3].name;
+  Picture.all[index3].times++;
 
-  }
-  else if (index3 === 0) {
-    while (index3 === index1 || index3 === index2) {
-      index3++;
-    }
+  // }
+  // else if (index3 === 0) {
+  //   while (index3 === index1 || index3 === index2) {
+  //     index3++;
+  //   }
 
-    image3.src = Picture.all[index3].path;
-    image3.title = Picture.all[index3].name;
-    Picture.all[index3].times++;
+  //   image3.src = Picture.all[index3].path;
+  //   image3.title = Picture.all[index3].name;
+  //   Picture.all[index3].times++;
 
-  }
-  else {
-    while (index3 === index1 || index3 === index2) {
-      index3--;
-    }
+  // }
+  // else {
+  //   while (index3 === index1 || index3 === index2) {
+  //     index3--;
+  //   }
 
-    image3.src = Picture.all[index3].path;
-    image3.title = Picture.all[index3].name;
-    Picture.all[index3].times++;
+  //   image3.src = Picture.all[index3].path;
+  //   image3.title = Picture.all[index3].name;
+  //   Picture.all[index3].times++;
 
-  }
+  // }
   holdIndex1 = index1;
   holdIndex2 = index2;
   holdIndex3 = index3;
@@ -152,7 +154,7 @@ imageSection.addEventListener('click', handelClick);
 
 function handelClick(event) {
   //   event.preventDefault();
-  if (count === 25) {
+  if (count === rounds) {
     alert('No more Picture , you reach 25 rounds');
   }
   else {
@@ -170,7 +172,7 @@ function handelClick(event) {
     //   console.table(Picture.all);
     render();
     count = count + 1;
-    if (count < 25) {
+    if (count < rounds) {
       result.style.visibility = 'hidden';
       // console.log(count);
     }
@@ -198,6 +200,7 @@ function resultFunc() {
 
   }
   let ctx = document.getElementById('myChart').getContext('2d');
+
   let chart = new Chart(ctx, {
     // The type of chart we want to create
     type: 'bar',
